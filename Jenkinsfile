@@ -2,16 +2,18 @@ pipeline {
     agent any
 
     stages {
-        stage ('clone repo') {
-           steps {
-               git 'https://github.com/ChamuMeravala/flask-tictactoe.git'
-           }
+        stage('Clone Repo') {
+            steps {
+                git branch: 'main', url: 'https://github.com/ChamuMeravala/flask-tictactoe.git'
+            }
         }
+
         stage('Install Dependencies') {
             steps {
                 sh 'pip install -r requirements.txt'
             }
         }
+
         stage('SonarQube Scan') {
             when {
                 expression { return false } // Skip for now
@@ -20,11 +22,10 @@ pipeline {
                 echo "SonarQube scan would go here"
             }
         }
+
         stage('Build Docker Image') {
             steps {
-                script {
-                    sh 'docker build -t flask-tictactoe .'
-                }
+                sh 'docker build -t flask-tictactoe .'
             }
         }
 
@@ -35,5 +36,4 @@ pipeline {
         }
     }
 }
-         
 

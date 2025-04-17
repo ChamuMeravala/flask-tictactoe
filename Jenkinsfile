@@ -31,14 +31,17 @@ pipeline {
             steps {
                 sh 'docker build -t flask-tictactoe .'
             }
+      
         }
-
         stage('Run App') {
-            steps {
-                sh 'docker run -d -p 5000:5000 flask-tictactoe'
-            }
-        }
+           steps {
+              sh '''
+                  docker stop flask-tictactoe || true
+                  docker rm flask-tictactoe || true
+                  docker run -d -p 5000:5000 --name flask-tictactoe flask-tictactoe
+              '''
+           }
+        } 
+     
     }
-
-} 
-                
+}            

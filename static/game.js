@@ -1,3 +1,5 @@
+
+
 const cells = document.querySelectorAll('[data-cell]');
 const board = document.getElementById('board');
 const winningMessage = document.getElementById('winningMessage');
@@ -88,4 +90,6 @@ function checkWin(currentClass) {
         });
     });
 }
+
+
 
